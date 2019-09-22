@@ -30,8 +30,8 @@ class MinHeap
     root = @store[0]
     new_root = @store[@store.length - 1]
 
-    @store[0] = new_root
     @store[@store.length - 1] = root
+    @store[0] = new_root
 
     removed = @store.pop
 
@@ -57,7 +57,9 @@ class MinHeap
   # Time complexity: ?
   # Space complexity: ?
   def empty?
-    raise NotImplementedError, "Method not implemented yet..."
+    # raise NotImplementedError, "Method not implemented yet..."
+    return true if @store == []
+    return false
   end
 
   private
