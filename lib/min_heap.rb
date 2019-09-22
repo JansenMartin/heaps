@@ -57,7 +57,6 @@ class MinHeap
   # Time complexity: ?
   # Space complexity: ?
   def empty?
-    # raise NotImplementedError, "Method not implemented yet..."
     return true if @store == []
     return false
   end
@@ -75,12 +74,7 @@ class MinHeap
     # return the array if there's no parent, or parent is less than or equal to child
     return @store if parent_index < 0 || @store[index].key >= @store[parent_index].key
 
-    # temporarily storing parent
-    parent_temp = @store[parent_index]
-    # child is now in parent's index
-    @store[parent_index] = @store[index]
-    # parent is now in child's former position
-    @store[index] = parent_temp
+    swap(parent_index, index)
 
     # call recursively on child's new position
     heap_up(parent_index)
