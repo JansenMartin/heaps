@@ -16,7 +16,6 @@ class MinHeap
   # Time Complexity: ?
   # Space Complexity: ?
   def add(key, value = key)
-    # raise NotImplementedError, "Method not implemented yet..."
     new_node = HeapNode.new(key, value)
     @store << new_node
 
@@ -28,7 +27,16 @@ class MinHeap
   # Time Complexity: ?
   # Space Complexity: ?
   def remove()
-    raise NotImplementedError, "Method not implemented yet..."
+    root = @store[0]
+    new_root = @store[@store.length - 1]
+
+    @store[0] = new_root
+    @store[@store.length - 1] = root
+
+    removed = @store.pop
+
+    heap_down(0)
+    return removed.value
   end
 
   # Used for Testing
@@ -80,7 +88,32 @@ class MinHeap
   #  moves it up the heap if it's smaller
   #  than it's parent node.
   def heap_down(index)
-    raise NotImplementedError, "Method not implemented yet..."
+    left_child = 2 * index + 1
+    right_child = 2 * index + 2
+    min_child = nil
+
+    # Return if there's no left child
+    return if left_child > @store.length - 1
+
+    # If there's no RIGHT child AND parent is greater than LEFT child...
+    # swap parent with left child
+    if @store[right_child].nil? && @store[index].key > @store[left_child].key
+      swap(index, left_child)
+      heap_down(index)
+    end
+
+    # Otherwise, which child is min?
+    if @store[right_child].key <= @store[left_child].key
+      min_child = @store.index(@store[right_child])
+    else
+      min_child = @store.index(@store[left_child])
+    end
+
+    # If parent is greater than minimum child, swap them
+    if @store[index].key > @store[min_child].key
+      swap(index, min_child)
+      heap_down(index)
+    end
   end
 
   # If you want a swap method... you're welcome
