@@ -14,7 +14,7 @@ class MinHeap
 
   # This method adds a HeapNode instance to the heap
   # Time Complexity: O(log n), where n is the number of levels in the heap
-  # Space Complexity: O(1), because there are no extra variables that change with input size
+  # Space Complexity: O(log n), where n is the number of times `heap_up` is called recursively
   def add(key, value = key)
     new_node = HeapNode.new(key, value)
     @store << new_node
@@ -25,7 +25,7 @@ class MinHeap
   # This method removes and returns an element from the heap
   #   maintaining the heap structure
   # Time Complexity: O(log n), where n is the number of levels in the heap
-  # Space Complexity: O(1), because there are no extra variables that change with input size
+  # Space Complexity: O(log n), where n is the number of times `heap_down` is called recursively
   def remove()
     root = @store[0]
     new_root = @store[@store.length - 1]
@@ -67,9 +67,10 @@ class MinHeap
   #  moves it up the heap, if it is less than it's parent node.
   #  It could be **very** helpful for the add method.
   # Time complexity: O(log n), where n is the number of levels inside the heap
-  # Space complexity: O(1), because there are no extra variables that hinge on input size
+  # Space complexity: O(log n), where n is the number of times the method is recursively called
   def heap_up(index)
-    parent_index = (index - 1) / 2 # get parent index based on child's position
+    # get parent index based on child's position
+    parent_index = (index - 1) / 2
 
     # return the array if there's no parent, or parent is less than or equal to child
     return @store if parent_index < 0 || @store[index].key >= @store[parent_index].key
@@ -96,17 +97,16 @@ class MinHeap
     if @store[right_child].nil? && @store[index].key > @store[left_child].key
       swap(index, left_child)
       heap_down(index)
-    end
-
-    # Otherwise, which child is min?
-    if @store[right_child].key <= @store[left_child].key
-      min_child = @store.index(@store[right_child])
-    else
-      min_child = @store.index(@store[left_child])
+    elsif @store[right_child] #Otherwise, which child is min?
+      if @store[right_child].key <= @store[left_child].key
+        min_child = @store.index(@store[right_child])
+      else
+        min_child = @store.index(@store[left_child])
+      end
     end
 
     # If parent is greater than minimum child, swap them
-    if @store[index].key > @store[min_child].key
+    if min_child && @store[index].key > @store[min_child].key
       swap(index, min_child)
       heap_down(index)
     end
