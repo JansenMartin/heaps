@@ -13,8 +13,9 @@ class MinHeap
   end
 
   # This method adds a HeapNode instance to the heap
-  # Time Complexity: O(log n), where n is the number of levels in the heap
-  # Space Complexity: O(log n), where n is the number of times `heap_up` is called recursively
+  # Time Complexity: O(log n), where n is the number of nodes in the heap
+  # Space complexity: O(log n), where n is the number of nodes in the heap.  The reason it's O(log n) (and not O(1)) is
+  # because we're calling this method recursively.
   def add(key, value = key)
     new_node = HeapNode.new(key, value)
     @store << new_node
@@ -24,8 +25,9 @@ class MinHeap
 
   # This method removes and returns an element from the heap
   #   maintaining the heap structure
-  # Time Complexity: O(log n), where n is the number of levels in the heap
-  # Space Complexity: O(log n), where n is the number of times `heap_down` is called recursively
+  # Time Complexity: O(log n), where n is the number of nodes in the heap
+  # Space complexity: O(log n), where n is the number of nodes in the heap.  The reason it's O(log n) (and not O(1)) is
+  # because we're calling this method recursively.
   def remove()
     root = @store[0]
     new_root = @store[@store.length - 1]
@@ -66,8 +68,9 @@ class MinHeap
   # This helper method takes an index and
   #  moves it up the heap, if it is less than it's parent node.
   #  It could be **very** helpful for the add method.
-  # Time complexity: O(log n), where n is the number of levels inside the heap
-  # Space complexity: O(log n), where n is the number of times the method is recursively called
+  # Time complexity: O(log n), where n is the number of nodes in the heap
+  # Space complexity: O(log n), where n is the number of nodes in the heap.  The reason it's O(log n) (and not O(1)) is
+  # because we're calling this method recursively.
   def heap_up(index)
     # get parent index based on child's position
     parent_index = (index - 1) / 2
